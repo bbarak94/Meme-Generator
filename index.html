@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="styles/style.css" />
+        <title>Barak-MemeGenerator</title>
+    </head>
+    <body onLoad="onInit()">
+        <header class="flex space-around">
+            <img class="logo" onclick="onInit()" src="design/LOGO.png" alt="" />
+            <nav class="nav-container flex align-center">
+                <div class="btn galery-btn">Gallery</div>
+                <div class="btn about-btn">About</div>
+            </nav>
+        </header>
+        <main class="flex direction-column">
+            <section class="options flex space-around">
+                <input
+                    type="text"
+                    name="search"
+                    id="search"
+                    placeholder="seach"
+                />
+                <div class="keywords flex space-around">
+                    <div class="category">
+                        <h3>Funny</h3>
+                    </div>
+                    <div class="category">
+                        <h3>Animal</h3>
+                    </div>
+                    <div class="category">
+                        <h3>Cute</h3>
+                    </div>
+                    <div class="category">
+                        <h3>Laugh</h3>
+                    </div>
+                    <div class="category">
+                        <h3>Sweet</h3>
+                    </div>
+                    <div class="category">
+                        <h3>Ridiculous</h3>
+                    </div>
+                </div>
+            </section>
+            <section class="gallery flex"></section>
+            <section class="editor-container flex">
+                <div class="canvas-container">
+                    <canvas
+                        id="my-canvas"
+                        height="400"
+                        width="400"
+                        color="#F5F5F5"
+                    ></canvas>
+                    <img src="" alt="" class="canvas-meme" hidden />
+                </div>
+                <div
+                    class="meme-editor flex direction-column align-center space-evenly"
+                >
+                    <input
+                        class="add-text"
+                        type="text"
+                        name="text"
+                        placeholder="Add Text"
+                        id=""
+                    />
+                    <div class="buttons flex">
+                        <button class="button flex line-toggle" onclick="onSwitchText()">
+                            <img class="icon up" src="icons/up.svg" alt="" />
+                            <img class="icon down" src="icons/down.svg" alt="" />
+                        </button>
+                        <button class="button" onclick="onAddText()">
+                            <img class="icon" src="icons/plus.svg" alt="" />
+                        </button>
+                        <button class="button" onclick="onRemoveText()">
+                            <img class="icon" src="icons/trash.svg" alt="" />
+                        </button>
+                    </div>
+                    <div class="tools flex">
+                        <div class="row row1 flex space-around">
+                            <button class="font-up">
+                                <img
+                                    class="icon"
+                                    src="icons/fontUp.svg"
+                                    alt=""
+                                />
+                            </button>
+                            <button class="font-down">
+                                <img
+                                    class="icon"
+                                    src="icons/fontDown.svg"
+                                    alt=""
+                                />
+                            </button>
+                            <button class="align-left">
+                                <img class="icon" src="icons/left.png" alt="" />
+                            </button>
+                            <button class="align-middle">
+                                <img
+                                    class="icon"
+                                    src="icons/middle.png"
+                                    alt=""
+                                />
+                            </button>
+                            <button class="align-right">
+                                <img
+                                    class="icon"
+                                    src="icons/right.png"
+                                    alt=""
+                                />
+                            </button>
+                        </div>
+                        <div class="row row2 flex">
+
+                                
+
+                                <div class="dropdown">
+                                    <button class="dropbtn">Font</button>
+                                    <div class="dropdown-content">
+                                        <a href="#" onclick="setFont('impact')">Impact</a>
+                                        <a href="#" onclick="setFont('ariel')">Ariel</a>
+                                        <a href="#" onclick="setFont('poppins')">Poppins</a>
+                                    </div>
+                                </div>
+
+                           
+                                <div class="color-container ">
+                                    <div class="color-div">
+                                        <img src="icons/stroke.svg" alt="underline">
+                                        <input type="color" class="stroke-color color-input" value="#000000"
+                                            onchange="onChangeStroke(value)">
+                                    </div>
+                                </div>
+                                <div class="color-container ">
+                                    <div class="color-div">
+                                        <img src="icons/color.svg" alt="tex">
+                                        <input type="color" class="text-color color-input" value="#ffffff"
+                                            onchange="onChangeFill(value)">
+                                    </div>
+                                </div>
+                            
+                            
+                            
+                            </div>
+
+
+                        <div class="row row3 flex">
+                            <button class="color">
+                                <img
+                                    class="icon"
+                                    src="icons/save.svg"
+                                    alt=""
+                                />
+                            </button>
+                            <button class="color">
+                                <img
+                                    class="icon share"
+                                    src="icons/share1.svg"
+                                    alt=""
+                                />
+                            </button>
+                            <button class="color">
+                                <img
+                                    class="icon"
+                                    src="icons/download.png"
+                                    alt=""
+                                />
+                            </button>
+
+
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <script src="js/services/storage-service.js"></script>
+        <script src="js/services/gallery-service.js"></script>
+        <script src="js/services/meme.service.js"></script>
+        <script src="js/memeController.js"></script>
+        <script src="js/services/gallery-controller.js"></script>
+        <script src="js/services/upload.service.js"></script>
+        <script src="js/main.js"></script>
+        <script src="lib/hammer.min.js"></script>
+    </body>
+</html>

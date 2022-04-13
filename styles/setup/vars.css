@@ -1,0 +1,10 @@
+/* Colors: */
+
+
+:root {
+   --clr1: #1A132F; /* Background */
+   --clr2: #5B7DB1; /* Header */
+   --clr3: #F7E2E2;  /* Gallery */ /* Canvas-container */
+   --clr4: #61A4BC; /* Edit Section */
+   --clr5: #F5F5F5; /* Text */    
+}

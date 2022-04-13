@@ -1,0 +1,36 @@
+
+button{
+   cursor: pointer;
+}
+
+/* flex */
+
+.flex {
+   display: flex;
+}
+
+.direction-column{
+   flex-direction: column;
+}
+
+.flex.space-around {
+   justify-content: space-around;
+}
+
+.flex.space-evenly {
+   justify-content:space-evenly;
+}
+
+.flex.align-center {
+   align-items: center;
+}
+
+.hidden{
+   display:none;
+}
+
+/* Grid */
+
+.grid{
+   display:grid;
+}
