@@ -3,7 +3,6 @@
 
 function onInit(){
    setEditOff()
-   console.log('onInit')
    document.querySelector('.editor-container').classList.add('hidden');
    document.querySelector('.gallery').classList.remove('hidden');
    renderGallery();

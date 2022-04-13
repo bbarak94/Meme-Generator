@@ -3,17 +3,18 @@ header {
     margin: 2vh 6vw;
     max-height: 200px;
     border-radius: 50px;
+    flex-wrap: unset;
 }
 
 .logo {
     cursor: pointer;
-    max-height: 38px;
+    max-height: 33px;
     margin: 15px 0 15px 25px;
 }
 
 nav {
-    margin-right: 50px;
-    gap: 50px;
+    margin-right: 20px;
+    gap: 5px;
 }
 
 .btn{

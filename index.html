@@ -46,11 +46,11 @@
             </section>
             <section class="gallery flex"></section>
             <section class="editor-container flex">
-                <div class="canvas-container">
+                <div class="canvas-container flex">
                     <canvas
                         id="my-canvas"
-                        height="400"
-                        width="400"
+                        height="500"
+                        width="500"
                         color="#F5F5F5"
                     ></canvas>
                     <img src="" alt="" class="canvas-meme" hidden />
@@ -79,14 +79,14 @@
                     </div>
                     <div class="tools flex">
                         <div class="row row1 flex space-around">
-                            <button class="font-up">
+                            <button class="font-up" onClick="fontUp()">
                                 <img
                                     class="icon"
                                     src="icons/fontUp.svg"
                                     alt=""
                                 />
                             </button>
-                            <button class="font-down">
+                            <button class="font-down" onClick="fontDown()">
                                 <img
                                     class="icon"
                                     src="icons/fontDown.svg"
