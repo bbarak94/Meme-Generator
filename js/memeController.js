@@ -217,7 +217,7 @@ function drawText(txt, x, y, size, font, fill, stroke) {
     // console.log(gCtx.font)
     gCtx.fillText(txt, x, y)
     gCtx.strokeStyle = stroke
-    gCtx.lineWidth = 3.5
+    gCtx.lineWidth = 2.5
     gCtx.strokeText(txt, x, y)
     // console.log('gCtx:', gCtx)
 }
