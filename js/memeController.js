@@ -65,8 +65,8 @@ function onSwitchText() {
 }
 function onAddText(x = false) {
     if (gText.text === '' && x === false) return
-    console.log(gText.text)
-    console.log(gMeme)
+    // console.log(gText.text)
+    // console.log(gMeme)
     var idx = gMeme.selectedLineIdx
     if (!gMeme.lines[idx]) {
         gMeme.lines[idx] = gText.text
@@ -104,7 +104,7 @@ function onAddText(x = false) {
             gFillColor,
             gStrokeColor
         )
-    } else {
+    } else if(idx===2) {
         drawText(
             gMeme.lines[idx],
             gMeme.pos2.x,
@@ -119,15 +119,21 @@ function onAddText(x = false) {
     // elTextInput.focus()
     elTextInput.value = ''
     elTextInput.placeholder = ''
-    console.log('Added')
+    // console.log('Added')
+    if(gMeme.selectedLineIdx>2){
+        gMeme.selectedLineIdx=-1
+    }
+    // console.log('idx:',idx)
+    // console.log('gMeme.selectedLineIdx before: ',gMeme.selectedLineIdx)
     gMeme.selectedLineIdx = idx + 1
+    // console.log('gMeme.selectedLineIdx after: ',gMeme.selectedLineIdx)
 }
 function onRemoveText() {
     clearText()
     gText.text = ''
     gMeme.lines = []
     resetgMemePos()
-    console.log('Remove')
+    // console.log('Remove')
 }
 
 function resetgMemePos() {
@@ -135,16 +141,19 @@ function resetgMemePos() {
 }
 function setFont(fontName) {
     changeFont(fontName)
+    reRenderText()
 }
 
 function onChangeStroke(color) {
-    console.log('Stroke:', color)
+    // console.log('Stroke:', color)
     setStroke(color)
+    reRenderText()
 }
 
 function onChangeFill(color) {
-    console.log('Fill:', color)
+    // console.log('Fill:', color)
     setFill(color)
+    reRenderText()
 }
 function renderCanvas() {
     // var elImg = document.querySelector('.canvas-meme')
@@ -159,14 +168,18 @@ function renderText() {
     // console.log('gText:',gText)
     // console.log('gText:',gText)
     // console.log('gMeme:',gMeme)
-    console.log('test')
+    // console.log('test')
     clearText()
     // const {pos,color,size}
 
     gMeme.lines.forEach((line) => {
         gMeme.selectedLineIdx = 0
         onAddText(true)
-        gMeme.selectedLineIdx++
+        if(gMeme.selectedLineIdx<2){
+            gMeme.selectedLineIdx++
+        }else{
+            gMeme.selectedLineIdx=0
+        }
     })
 
     // renderImg(gElImg)
@@ -201,11 +214,12 @@ function drawText(txt, x, y, size, font, fill, stroke) {
     // console.log('fontStr:',fontStr)
 
     gCtx.font = size + 'px ' + font
-    console.log(gCtx.font)
+    // console.log(gCtx.font)
     gCtx.fillText(txt, x, y)
     gCtx.strokeStyle = stroke
+    gCtx.lineWidth = 3.5
     gCtx.strokeText(txt, x, y)
-    console.log('gCtx:', gCtx)
+    // console.log('gCtx:', gCtx)
 }
 
 function addListeners() {
@@ -217,7 +231,7 @@ function addListeners() {
     elTextInput.addEventListener('change', (event) => {
         newText = event.target.value
         gText['text'] = newText
-        console.log('gText:', gText)
+        // console.log('gText:', gText)
     })
 
     window.addEventListener('resize', () => {
@@ -225,7 +239,7 @@ function addListeners() {
         const center = { x: gElCanvas.width / 2, y: gElCanvas.height / 2 }
 
         // createText(center)
-        // resizeCanvasContainer()
+        resizeCanvasContainer()
         // renderCanvas()
         // renderText()
     })
@@ -265,7 +279,6 @@ function onDown(ev) {
     setTextDrag(true)
     gStartPos = pos
     console.log('gStartPos:', gStartPos)
-
     document.body.style.cursor = 'grabbing'
 }
 

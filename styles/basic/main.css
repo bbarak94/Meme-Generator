@@ -103,12 +103,19 @@ main {
     border-width: 8px; */
 /* } */
 /* width="476px" height="546px" */
+
+.canvas-container {
+    max-width: 60vw;
+}
+
+
 canvas {
     align-self: center;
     
     /* height: 30vh; */
      /* height: 100%;  */
-    /* width: 90%;  */
+    /* max-width: 500px; */
+     /* width: 80vw;  */
 }
 
 .meme-editor {

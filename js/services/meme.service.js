@@ -45,17 +45,19 @@ function serviceInit() {
     elImg.src = `img/${gCurrId}.jpg`
     gElImg = elImg
     
-    if(!gMeme){
+    // resizeCanvasContainer()
+    resizeCanvas()
+    // if(!gMeme){
         var meme = createMeme()
-    }
-    resizeCanvasContainer()
+    // }
     const center = { x: gElCanvas.width / 2, y: gElCanvas.height / 2 }
     createText(center)
     addListeners()
 
 
+    resizeCanvas()
 
-    resizeCanvasContainer()
+    // resizeCanvasContainer()
     renderMeme()
     renderCanvas()
 
@@ -76,6 +78,8 @@ function getRealImgSize(ev){
     console.log('Width:',width)
     gAspectRatio = width/height
     setCanvasSize(width,height)
+    console.log('gMeme:',gMeme)
+    
 }
 
 function setCanvasSize(w,h){
@@ -93,10 +97,6 @@ function setEditOff() {
 }
 
 
-function moveText(dx, dy) {
-    gText.pos.x += dx
-    gText.pos.y += dy
-}
 
 function getText() {
     return gText
@@ -131,6 +131,13 @@ function resizeCanvasContainer() {
     elContainer.height = gImgH
     
     // gElCanvas.width = elContainer.offsetWidth
+    // gElCanvas.height = elContainer.offsetHeight
+}
+
+function resizeCanvas() {
+    var elContainer = document.querySelector('.canvas-container')
+    gElCanvas.width = elContainer.offsetWidth
+    gElCanvas.height = gElCanvas.width/gAspectRatio
     // gElCanvas.height = elContainer.offsetHeight
 }
 
