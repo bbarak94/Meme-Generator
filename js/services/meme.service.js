@@ -62,10 +62,10 @@ function onMove() {
     renderCanvas()
 }
 
-function onUp() {
-    setTextDrag(false)
-    document.body.style.cursor = 'grab'
-}
+// function onUp() {
+//     setTextDrag(false)
+//     document.body.style.cursor = 'grab'
+// }
 
 function clearCanvas() {
     gCtx.clearRect(0, 0, gElCanvas.width*10, gElCanvas.height*10)
@@ -171,3 +171,35 @@ function loadImageFromInput(ev, onImageReady) {
 //         },
 //     ],
 // }
+
+
+
+
+
+
+
+
+
+
+
+
+// lines = [
+//     {text:'str1',
+// color:,
+// size:,
+// font
+// },
+//     'str2',
+//     'str']
+
+
+
+
+
+
+
+
+
+
+
+

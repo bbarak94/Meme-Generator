@@ -18,7 +18,6 @@ function isTextClicked(clickedPos) {
     )
     if (distance * 2 <= parseInt(gText.size)) {
         gIsTextSelected = 0
-        console.log('Clicked: 0')
         gText.isDrag = true
         return
     }
@@ -28,7 +27,6 @@ function isTextClicked(clickedPos) {
     )
     if (distance * 2 <= parseInt(gText.size)) {
         gIsTextSelected = 1
-        console.log('Clicked: 1')
         gText.isDrag = true
 
         return
@@ -39,20 +37,20 @@ function isTextClicked(clickedPos) {
     )
     if (distance * 2 <= parseInt(gText.size)) {
         gIsTextSelected = 2
-        console.log('Clicked: 2')
         gText.isDrag = true
 
         return
     } else {
         gIsTextSelected = null
-        console.log('Clicked: Nothing')
+        gIsTextSelected = null
+        drawRect()
+
         return
     }
 }
 
 function setTextDrag(isDrag) {
     gText.isDrag = isDrag
-    console.log('textDragged')
 }
 
 function moveText(dx, dy) {
@@ -69,6 +67,16 @@ function debugMe() {
     console.log('gMeme.selectedLineIdx:', gMeme.selectedLineIdx)
     console.log('gMeme:', gMeme)
 }
+
+function onDonloadImg() {
+    uploadImg()
+}
+
+function onShareImg() {
+    shareImg()
+}
+
+function onSaveImg() {}
 
 function onAddText(x = false) {
     // if (gText.text === '' && x === false) return
@@ -132,7 +140,6 @@ function onAddText(x = false) {
         )
     }
 
-    // if(gMeme.lines[idx]==='') return
 
     var elTextInput = document.querySelector('.add-text')
     elTextInput.value = ''
@@ -140,17 +147,13 @@ function onAddText(x = false) {
     if (gMeme.selectedLineIdx > 2) {
         gMeme.selectedLineIdx = 0
     }
-    // gMeme.selectedLineIdx = idx + 1
 }
 function onRemoveText() {
-    if(gIsTextSelected===null)return
-    // gMeme.
-    
-    
-    // clearText()
-    // gText.text = ''
-    // gMeme.lines = []
-    // resetgMemePos()
+    // if (gIsTextSelected === null) return  
+    clearText()
+    gText.text = ''
+    gMeme.lines = []
+    resetgMemePos()
 }
 
 function resetgMemePos() {
@@ -268,7 +271,6 @@ function onDown(ev) {
 }
 
 function onMove(ev) {
-    // console.log('test')
     const text = gText
     if (!text.isDrag) return
     const pos = getEvPos(ev)
@@ -280,14 +282,13 @@ function onMove(ev) {
 }
 
 function onUp(ev) {
-    console.log('onUp')
-    console.log('released')
     gText.isDrag = false
     const pos = getEvPos(ev)
     var posStr = 'pos' + gIsTextSelected
     gMeme[posStr].x = pos.x
     gMeme[posStr].y = pos.y
     reRenderText()
+    drawRect()
 }
 
 function reRenderText() {
@@ -296,19 +297,9 @@ function reRenderText() {
     gMeme.selectedLineIdx = 0
     clearText()
 
-    if (gIsTextSelected !== 'null') {
-        console.log('mark')
-    } else {
-        console.log('unmark')
-    }
-
     for (var i = 0; i < gMeme.lines.length; i++) {
         onAddText(true)
     }
-
-    // onAddText(true)
-    // onAddText(true)
-    // onAddText(true)
 }
 
 function clearText() {
@@ -338,7 +329,6 @@ function fontUp() {
     var idx = gIsTextSelected
     gMeme.lines.idx
     var keyStr = 'size' + idx
-    console.log(keyStr)
     gMeme[keyStr] = gMeme[keyStr] + 10
     reRenderText()
 }
@@ -348,27 +338,21 @@ function fontDown() {
     var idx = gIsTextSelected
     gMeme.lines.idx
     var keyStr = 'size' + idx
-    console.log(keyStr)
     gMeme[keyStr] = gMeme[keyStr] - 10
     reRenderText()
 }
 
 function drawRect() {
-    if (gIsTextSelected === null){
+    clearText()
+    reRenderText()
+    if (gIsTextSelected === null) {
         return
     }
     var keyStr = 'pos' + gIsTextSelected
-    console.log('keyStr:', keyStr)
-    console.log('gMeme[keyStr].x:', gMeme[keyStr].x)
-    console.log('gMeme[keyStr].y:', gMeme[keyStr].y)
-    gCtx.clearRect(0,0,gElCanvas.width,gElCanvas.height)
-    gCtx.rect(
-        gMeme[keyStr].x - 50,
-        gMeme[keyStr].y - 25,
-        100,
-        50
-    )
+    gCtx.beginPath()
+    gCtx.rect(gMeme[keyStr].x - 50, gMeme[keyStr].y - 25, 100, 50)
     gCtx.lineWidth = 3
     gCtx.strokeStyle = 'red'
     gCtx.stroke()
+    gCtx.closePath()
 }
