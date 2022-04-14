@@ -1,5 +1,11 @@
 'use strict'
-// console.log('gallery-controller.js connected')
+
+function onInit(){
+    setEditOff()
+    document.querySelector('.editor-container').classList.add('hidden');
+    document.querySelector('.gallery').classList.remove('hidden');
+    renderGallery();
+ }
 
 function renderGallery() {
     var images = getImages()
@@ -13,10 +19,7 @@ function renderGallery() {
 
 function onClickImg(id) {
     setEditOn()
-    console.log('onClickImg,id:', id)
     document.querySelector('.gallery').classList.add('hidden')
-    // meme.selectedImgId = id
-    // console.log('meme.selectedImgId:', meme.selectedImgId)
     document.querySelector('.editor-container').classList.remove('hidden')
     updateCurrId(id)
     serviceInit()

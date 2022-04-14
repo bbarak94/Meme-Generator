@@ -1,6 +1,6 @@
 'use strict'
 // console.log('memeController.js connected')
-var gIsTextSelected = false
+var gIsTextSelected = null
 var gElCanvas
 var gCtx
 var gCurrId
@@ -63,14 +63,30 @@ function moveText(dx, dy) {
 function onSwitchText() {
     console.log('Switch')
 }
+
+function debugMe() {
+    console.log('gIsTextSelected:', gIsTextSelected)
+    console.log('gMeme.selectedLineIdx:', gMeme.selectedLineIdx)
+    console.log('gMeme:', gMeme)
+}
+
 function onAddText(x = false) {
-    if (gText.text === '' && x === false) return
-    // console.log(gText.text)
-    // console.log(gMeme)
+    // if (gText.text === '' && x === false) return
+    if (gMeme.lines.length === 3 && gText.text !== '') {
+        alert('maximum 3 lines of text (clear text field)')
+        return
+    }
+    var elTextInput = document.querySelector('.add-text')
+    // if (elTextInput.value === '' && x === false) return
     var idx = gMeme.selectedLineIdx
+    if (idx > gMeme.lines.length) {
+        return
+    }
+    gMeme.selectedLineIdx = idx + 1
     if (!gMeme.lines[idx]) {
         gMeme.lines[idx] = gText.text
     }
+
     gText.text === ''
     if (idx === 0) {
         drawText(
@@ -104,7 +120,7 @@ function onAddText(x = false) {
             gFillColor,
             gStrokeColor
         )
-    } else if(idx===2) {
+    } else if (idx === 2) {
         drawText(
             gMeme.lines[idx],
             gMeme.pos2.x,
@@ -115,25 +131,26 @@ function onAddText(x = false) {
             gStrokeColor
         )
     }
+
+    // if(gMeme.lines[idx]==='') return
+
     var elTextInput = document.querySelector('.add-text')
-    // elTextInput.focus()
     elTextInput.value = ''
     elTextInput.placeholder = ''
-    // console.log('Added')
-    if(gMeme.selectedLineIdx>2){
-        gMeme.selectedLineIdx=-1
+    if (gMeme.selectedLineIdx > 2) {
+        gMeme.selectedLineIdx = 0
     }
-    // console.log('idx:',idx)
-    // console.log('gMeme.selectedLineIdx before: ',gMeme.selectedLineIdx)
-    gMeme.selectedLineIdx = idx + 1
-    // console.log('gMeme.selectedLineIdx after: ',gMeme.selectedLineIdx)
+    // gMeme.selectedLineIdx = idx + 1
 }
 function onRemoveText() {
-    clearText()
-    gText.text = ''
-    gMeme.lines = []
-    resetgMemePos()
-    // console.log('Remove')
+    if(gIsTextSelected===null)return
+    // gMeme.
+    
+    
+    // clearText()
+    // gText.text = ''
+    // gMeme.lines = []
+    // resetgMemePos()
 }
 
 function resetgMemePos() {
@@ -145,54 +162,32 @@ function setFont(fontName) {
 }
 
 function onChangeStroke(color) {
-    // console.log('Stroke:', color)
     setStroke(color)
     reRenderText()
 }
 
 function onChangeFill(color) {
-    // console.log('Fill:', color)
     setFill(color)
     reRenderText()
+    // gMeme.selectedLineIdx = gMeme.lines.length;
 }
 function renderCanvas() {
-    // var elImg = document.querySelector('.canvas-meme')
-    // elImg.src = `img/${gCurrId}.jpg`
-    // gElImg = elImg
     renderImg(gElImg)
-    renderText()
+    // renderText()
 }
 
-function renderText() {
-    // console.log('gElImg', gElImg)
-    // console.log('gText:',gText)
-    // console.log('gText:',gText)
-    // console.log('gMeme:',gMeme)
-    // console.log('test')
-    clearText()
-    // const {pos,color,size}
-
-    gMeme.lines.forEach((line) => {
-        gMeme.selectedLineIdx = 0
-        onAddText(true)
-        if(gMeme.selectedLineIdx<2){
-            gMeme.selectedLineIdx++
-        }else{
-            gMeme.selectedLineIdx=0
-        }
-    })
-
-    // renderImg(gElImg)
-    // var first = gMeme.lines[0].txt
-    // var { size, font, fill, stroke } = gText
-    // drawText(first, gText.pos.x, 20, size, font, fill, stroke)
-    // var second = gMeme.lines[1].txt
-    // var { size, font, fill, stroke } = gText
-    // drawText(second, gText.pos.x, gText.pos.y, size, font, fill, stroke)
-    // var third = gMeme.lines[2].txt
-    // var { size, font, fill, stroke } = gText
-    // drawText(third, gText.pos.x, gText.pos.y * 2 - 20, size, font, fill, stroke)
-}
+// function renderText() {
+//     clearText()
+//     gMeme.lines.forEach((line) => {
+//         gMeme.selectedLineIdx = 0
+//         onAddText(true)
+//         if (gMeme.selectedLineIdx < 2) {
+//             gMeme.selectedLineIdx++
+//         } else {
+//             gMeme.selectedLineIdx = 0
+//         }
+//     })
+// }
 
 function createText(pos) {
     gText = {
@@ -210,16 +205,11 @@ function drawText(txt, x, y, size, font, fill, stroke) {
     gCtx.textBaseline = 'middle'
     gCtx.textAlign = 'center'
     gCtx.fillStyle = fill
-    // var fontStr = size + ' ' + font
-    // console.log('fontStr:',fontStr)
-
     gCtx.font = size + 'px ' + font
-    // console.log(gCtx.font)
     gCtx.fillText(txt, x, y)
     gCtx.strokeStyle = stroke
-    gCtx.lineWidth = 2.5
+    gCtx.lineWidth = 2
     gCtx.strokeText(txt, x, y)
-    // console.log('gCtx:', gCtx)
 }
 
 function addListeners() {
@@ -231,17 +221,13 @@ function addListeners() {
     elTextInput.addEventListener('change', (event) => {
         newText = event.target.value
         gText['text'] = newText
-        // console.log('gText:', gText)
     })
 
     window.addEventListener('resize', () => {
         if (!gIsEditOn) return
         const center = { x: gElCanvas.width / 2, y: gElCanvas.height / 2 }
-
         // createText(center)
         resizeCanvasContainer()
-        // renderCanvas()
-        // renderText()
     })
 }
 
@@ -276,13 +262,13 @@ function onDown(ev) {
     const pos = getEvPos(ev)
     gStartPos = getEvPos(ev)
     if (!isTextClicked(pos)) return
-    setTextDrag(true)
-    gStartPos = pos
-    console.log('gStartPos:', gStartPos)
-    document.body.style.cursor = 'grabbing'
+    // setTextDrag(true)
+    // gStartPos = pos
+    // document.body.style.cursor = 'grabbing'
 }
 
 function onMove(ev) {
+    // console.log('test')
     const text = gText
     if (!text.isDrag) return
     const pos = getEvPos(ev)
@@ -295,7 +281,6 @@ function onMove(ev) {
 
 function onUp(ev) {
     console.log('onUp')
-    // if(!gIsTextSelected)return
     console.log('released')
     gText.isDrag = false
     const pos = getEvPos(ev)
@@ -303,21 +288,27 @@ function onUp(ev) {
     gMeme[posStr].x = pos.x
     gMeme[posStr].y = pos.y
     reRenderText()
-    // renderText()
 }
 
 function reRenderText() {
     clearText()
     gText.text = ''
     gMeme.selectedLineIdx = 0
-    // setTimeout(() => {
     clearText()
-    // }, 400);
-    // setTimeout(() => {
-    onAddText(true)
-    onAddText(true)
-    onAddText(true)
-    // }, 400);
+
+    if (gIsTextSelected !== 'null') {
+        console.log('mark')
+    } else {
+        console.log('unmark')
+    }
+
+    for (var i = 0; i < gMeme.lines.length; i++) {
+        onAddText(true)
+    }
+
+    // onAddText(true)
+    // onAddText(true)
+    // onAddText(true)
 }
 
 function clearText() {
@@ -326,12 +317,10 @@ function clearText() {
 }
 
 function renderImg(img) {
-    // get the scale
     var scale = Math.min(
         gElCanvas.width / img.width,
         gElCanvas.height / img.height
     )
-    // get the top left position of the image
     var x = gElCanvas.width / 2 - (img.width / 2) * scale
     var y = gElCanvas.height / 2 - (img.height / 2) * scale
     gCtx.drawImage(img, x, y, img.width * scale, img.height * scale)
@@ -341,12 +330,11 @@ function getImgPath(id) {
     return `img/${id - 1}.jpg`
 }
 
-function renderMeme() {
-    console.log('renderMeme')
-}
+// function renderMeme() {
+// }
 
 function fontUp() {
-    if (gIsTextSelected===null) return
+    if (gIsTextSelected === null) return
     var idx = gIsTextSelected
     gMeme.lines.idx
     var keyStr = 'size' + idx
@@ -356,7 +344,7 @@ function fontUp() {
 }
 
 function fontDown() {
-    if (gIsTextSelected===null) return
+    if (gIsTextSelected === null) return
     var idx = gIsTextSelected
     gMeme.lines.idx
     var keyStr = 'size' + idx
@@ -365,8 +353,22 @@ function fontDown() {
     reRenderText()
 }
 
-// onmousedown="onCanvasClick(event)"
-//  onmouseup="onMouseUp()"
-//   onmousemove="onDrag(event)"
-// ontouchmove="event.preventDefault()"
-//  ontouchend="onMouseUp()"
+function drawRect() {
+    if (gIsTextSelected === null){
+        return
+    }
+    var keyStr = 'pos' + gIsTextSelected
+    console.log('keyStr:', keyStr)
+    console.log('gMeme[keyStr].x:', gMeme[keyStr].x)
+    console.log('gMeme[keyStr].y:', gMeme[keyStr].y)
+    gCtx.clearRect(0,0,gElCanvas.width,gElCanvas.height)
+    gCtx.rect(
+        gMeme[keyStr].x - 50,
+        gMeme[keyStr].y - 25,
+        100,
+        50
+    )
+    gCtx.lineWidth = 3
+    gCtx.strokeStyle = 'red'
+    gCtx.stroke()
+}

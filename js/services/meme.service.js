@@ -1,5 +1,5 @@
 'use strict'
-console.log('meme.service.js connected')
+// console.log('meme.service.js connected')
 
 var gFontSize = '50px'
 var gFontName = 'impact'
@@ -10,94 +10,43 @@ var gImgW
 var gImgH
 var gAspectRatio
 var gStartPos
-
 var gMeme
-// var gMeme = {
-//     selectedImgId: 5,
-//     selectedLineIdx: 0,
-//     lines: [
-//         {
-//             txt: 'First Line',
-//             size: 20,
-//             align: 'left',
-//             color: 'red',
-//         },
-//         {
-//             txt: 'Second Line',
-//             size: 10,
-//             align: 'left',
-//             color: 'red',
-//         },
-//         {
-//             txt: 'Third Line',
-//             size: 15,
-//             align: 'left',
-//             color: 'red',
-//         },
-//     ],
-// }
 
 function serviceInit() {
     gElCanvas = document.querySelector('canvas')
     gCtx = gElCanvas.getContext('2d')
-    
     var elImg = document.querySelector('.canvas-meme')
     elImg.src = `img/${gCurrId}.jpg`
     gElImg = elImg
-    
-    // resizeCanvasContainer()
     resizeCanvas()
-    // if(!gMeme){
-        var meme = createMeme()
-    // }
+    var meme = createMeme()
     const center = { x: gElCanvas.width / 2, y: gElCanvas.height / 2 }
     createText(center)
     addListeners()
-
-
     resizeCanvas()
-
-    // resizeCanvasContainer()
-    renderMeme()
-    renderCanvas()
-
+    // renderCanvas()
     setTimeout(() => {
         renderCanvas()
     }, 200)
-
-    //     const center = { x: gElCanvas.width / 2, y: gElCanvas.height / 2 }
-    // createText(center)
-    // resizeCanvas()
-    // renderCanvas()
 }
-
-function getRealImgSize(ev){
+function getRealImgSize(ev) {
     var height = ev.naturalHeight
     var width = ev.naturalWidth
-    console.log('Height:',height)
-    console.log('Width:',width)
-    gAspectRatio = width/height
-    setCanvasSize(width,height)
-    console.log('gMeme:',gMeme)
-    
+    gAspectRatio = width / height
+    setCanvasSize(width, height)
 }
-
-function setCanvasSize(w,h){
-    document.querySelector('#my-canvas').setAttribute("width",w)
-    document.querySelector('#my-canvas').setAttribute("height",h)
+function setCanvasSize(w, h) {
+    document.querySelector('#my-canvas').setAttribute('width', w)
+    document.querySelector('#my-canvas').setAttribute('height', h)
     gImgW = w
     gImgH = h
 }
-
 function setEditOn() {
     gIsEditOn = true
 }
 function setEditOff() {
     gIsEditOn = false
 }
-
-
-
 function getText() {
     return gText
 }
@@ -119,26 +68,20 @@ function onUp() {
 }
 
 function clearCanvas() {
-    gCtx.clearRect(0, 0, gElCanvas.width, gElCanvas.height)
-    // You may clear part of the canvas
-    // gCtx.clearRect(0, 0, gCanvas.width, gCanvas.height/4)
+    gCtx.clearRect(0, 0, gElCanvas.width*10, gElCanvas.height*10)
 }
 
 function resizeCanvasContainer() {
     var elContainer = document.querySelector('.canvas-container')
-    
+
     elContainer.width = gImgW
     elContainer.height = gImgH
-    
-    // gElCanvas.width = elContainer.offsetWidth
-    // gElCanvas.height = elContainer.offsetHeight
 }
 
 function resizeCanvas() {
     var elContainer = document.querySelector('.canvas-container')
     gElCanvas.width = elContainer.offsetWidth
-    gElCanvas.height = gElCanvas.width/gAspectRatio
-    // gElCanvas.height = elContainer.offsetHeight
+    gElCanvas.height = gElCanvas.width / gAspectRatio
 }
 
 function changeFont(fontName) {
@@ -169,25 +112,21 @@ function getMeme() {
 }
 
 function createMeme() {
-    console.log(gElImg)
     var newMeme = {
         selectedImgId: gCurrId,
         selectedLineIdx: 0,
         lines: [],
-        size0:50,
-        size1:50,
-        size2:50,
-        pos0:{x:gElCanvas.width/2,y:30},
-        pos1:{x:gElCanvas.width/2,y:gElCanvas.height-30},
-        pos2:{x:gElCanvas.width/2,y:gElCanvas.height/2}
+        size0: 50,
+        size1: 50,
+        size2: 50,
+        pos0: { x: gElCanvas.width / 2, y: 30 },
+        pos1: { x: gElCanvas.width / 2, y: gElCanvas.height - 30 },
+        pos2: { x: gElCanvas.width / 2, y: gElCanvas.height / 2 },
     }
     gMeme = newMeme
     return gMeme
 }
 
-function setLineText() {
-    renderMeme()
-}
 
 /////////////////////
 
@@ -207,3 +146,28 @@ function loadImageFromInput(ev, onImageReady) {
     console.log('after')
     reader.readAsDataURL(ev.target.files[0])
 }
+
+// var gMeme = {
+//     selectedImgId: 5,
+//     selectedLineIdx: 0,
+//     lines: [
+//         {
+//             txt: 'First Line',
+//             size: 20,
+//             align: 'left',
+//             color: 'red',
+//         },
+//         {
+//             txt: 'Second Line',
+//             size: 10,
+//             align: 'left',
+//             color: 'red',
+//         },
+//         {
+//             txt: 'Third Line',
+//             size: 15,
+//             align: 'left',
+//             color: 'red',
+//         },
+//     ],
+// }

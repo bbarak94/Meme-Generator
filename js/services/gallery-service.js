@@ -1,15 +1,5 @@
 'use strict'
 // console.log('gallery-service.js connected')
-
-var gKeywordSearchCountMap = {
-   funny: 0,
-   animal: 0,
-   cute: 0,
-   laugh: 0,
-   sweet: 0,
-   ridiculous: 0,
-}
-
 var gImages = [
    { id: 1, url: 'img/1.jpg', keywords: ['funny', 'ridiculous'] },
    { id: 2, url: 'img/2.jpg', keywords: ['animal', 'cute'] },
@@ -42,3 +32,23 @@ function getImages(){
    return images
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+// var gKeywordSearchCountMap = {
+//    funny: 0,
+//    animal: 0,
+//    cute: 0,
+//    laugh: 0,
+//    sweet: 0,
+//    ridiculous: 0,
+// }
