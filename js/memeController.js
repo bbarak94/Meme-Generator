@@ -69,11 +69,20 @@ function debugMe() {
 }
 
 function onDonloadImg() {
-    uploadImg()
+    clearText()
+    reRenderText()
+    setTimeout(() => {
+        uploadImg()
+    }, (400));
 }
 
 function onShareImg() {
-    shareImg()
+    clearText()
+    reRenderText()
+    setTimeout(() => {
+        shareImg()
+    }, (400));
+
 }
 
 function onSaveImg() {}
